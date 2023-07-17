@@ -1,0 +1,162 @@
+<div
+	class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+	<h1 class="h2">Editing: <%= user.firstName %> <%= user.lastName %></h1>
+	<div class="btn-toolbar mb-2 mb-md 0">
+		<div class="btn-group me-2">
+			<!-- <a href="/add" class="btn btn-sm btn-outline-primary">+ New User</a> -->
+		</div>
+	</div>
+</div>
+
+<div class="col py-3">
+	<div class="row">
+		<div class="col">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="/">Dashboard</a>
+					</li>
+					<li class="breadcrumb-item active">Edit <%= user.firstName %></li>
+				</ol>
+			</nav>
+		</div>
+
+		<div class="col text-end fw-lighter">
+			<b>UserID</b>
+		</div>
+	</div>
+</div>
+
+<% messages.forEach(element => { %>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+	<%= element %>
+	<button
+		type="button"
+		class="btn-close"
+		data-bs-dismiss="alert"
+		aria-label="Close"
+	></button>
+</div>
+<% }) %>
+
+<form action="/edit/<%= user._id %>?_method=PUT" method="POST">
+	<div class="row form-group mb-4">
+		<div class="col">
+			<label for="firstName">First Name</label>
+			<input
+				type="text"
+				class="form-control"
+				id="firstName"
+				name="firstName"
+				placeholder="First Name"
+				required
+				value="<%= user.firstName %>"
+			/>
+		</div>
+		<div class="col">
+			<label for="lastName">Last Name</label>
+			<input
+				type="text"
+				class="form-control"
+				id="lastName"
+				name="lastName"
+				placeholder="Last Name"
+				required
+				value="<%= user.lastName %>"
+			/>
+		</div>
+	</div>
+
+	<div class="row form-group mb-4">
+		<div class="col">
+			<label for="tel">Telephone</label>
+			<input
+				type="text"
+				class="form-control"
+				id="tel"
+				name="tel"
+				placeholder="Telephone"
+				required
+				value="<%= user.tel %>"
+			/>
+		</div>
+		<div class="col">
+			<label for="email">Email</label>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				placeholder="Email"
+				required
+				value="<%= user.email %>"
+			/>
+		</div>
+	</div>
+
+	<div class="form-group mb-4">
+		<label for="details">User Details</label>
+		<textarea
+			class="form-control"
+			id="details"
+			name="details"
+			placeholder="User Details..."
+			cols="30"
+			rows="8"
+		>
+<%= user.details %>
+	</textarea
+		>
+	</div>
+
+	<div class="form-group mb-4">
+		<button type="submit" class="btn btn-primary">Update User</button>
+		<button
+			type="button"
+			class="btn btn-danger"
+			data-bs-toggle="modal"
+			data-bs-target="#deleteModal"
+		>
+			Delete User
+		</button>
+	</div>
+</form>
+
+<div
+	class="modal fade"
+	id="deleteModal"
+	tabindex="-1"
+	aria-labelledby="deleteModalLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="deleteModalLabel">Delete</h1>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+				></button>
+			</div>
+			<div class="modal-body">
+				You are about to delete <%= user.firstName %> <%= user.lastName %>. This
+				will remove the record permanently. Are you sure?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+					Cancel
+				</button>
+				<form
+					action="/delete/<%= user._id %>?_method=DELETE"
+					method="POST"
+					class="postiion-relative"
+				>
+					<button type="submit" class="btn btn-danger">Yes, Delete</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
